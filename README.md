@@ -33,6 +33,9 @@ learning where to go and which enemies to avoid. This process can take some time
 to over a day of learning, until the player object successfully completes the level without dying and 
 potentially better than human players.
 
+We also plan on implementing a clustering analysis (likely GMM/EM) of the various models we create, to see which one's worked and which one's didn't and why.
+
+To extend this even further, we want the ability to detect which level Mario is in within some reasonable bounds (e.g. the first world). This will likely be using CNNs and screenshots of the game without the UI.
 
 ## Results
 
@@ -49,6 +52,8 @@ learn how to play almost any standard level it comes across after it has been tr
 trained on a wide variety of levels, we want it to be able to play any other level with only a little 
 difficulty the first time through, just like a skilled human can.
 
+For the analysis, we want to be able to apply our learned information to better program our NEAT algorithm.
+
 ## Discussion
 
 The best physical outcome for this project would be the generation of a model to play through each level of
@@ -56,6 +61,8 @@ Super Mario Bros. without dying--maybe with at least a little training beforehan
 
 We also hope at a high level this explore more into the generalization of models when using NEAT to play
 video games, and possibly explore into training a model to play more complex games like Kirby. 
+
+We also hope to get a reasonable accuracy on the level detection.
 
 ## References
 
