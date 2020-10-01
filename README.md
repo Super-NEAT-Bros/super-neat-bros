@@ -1,5 +1,7 @@
 # Super NEAT Bros. Touchpoint 1
 
+Aidan Albers, Jeremy Webb, Zachary Baskin, Zachary Minot
+
 ## Summary
 
 ![infographic](super-neat-bros-infographic.png)
