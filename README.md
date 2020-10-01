@@ -2,9 +2,7 @@
 
 ## Summary
 
-one infographic prepared by your team that summarizes your project goal;
-
-Insert infographic here.
+![infographic](super-neat-bros-infographic.png)
 
 ## Introduction/Background
 
