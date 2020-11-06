@@ -16,7 +16,7 @@ we looked at this and instead asked,
 
 To choose the game, we recognized that we should probably try this first on an older game. Older games are much easier to both control
 (due to often having less complicated and controls overall) and extract into data for our model
-(due to often using tilesets). 
+(due to often using tilesets).
 Super Mario Bros. is a classic game for the Nintendo Entertainment System that has very few controls:
 right, left, jump, and run. It also has world split into a tileset that allows us to easily view the game as a grid. As a bonus,
 the goal of Super Mario Bros. is as simple of an idea as getting to the flag at the right of the world. The game is also run on an emulator on a PC for
