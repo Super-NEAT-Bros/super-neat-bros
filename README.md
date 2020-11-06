@@ -4,7 +4,7 @@ Aidan Albers, Jeremy Webb, Zachary Baskin, Zachary Minot
 
 ## Summary
 
-![infographic](super-neat-bros-infographic.png)
+![infographic](img/super-neat-bros-infographic.png)
 
 ## Introduction/Background
 
@@ -120,7 +120,7 @@ sliced with a 240-pixel-width “sliding window”, with a stride of 4. This siz
 displayed via an emulator. The method produces around 800 images per most levels.
 Some level have higher or lower image counts due to level length, but this should not affect the data.
 
-| ![]() |
+| ![Example Image slice](img/example_slice.png) |
 |:--:|
 | *An example image slice from the first world.* |
 
@@ -133,7 +133,7 @@ To determine which levels were similar in color to one another, we decided KMean
 GMM/EM might conform better, but we want hard assignments in terms of color quantity. When we ran this entire dataset 
 through the KMeans Elbow Method via scikitlearn, we got the best results at 12 clusters.
 
-| ![]() |
+| ![Elbow Method sklearn with Kmeans and color quantity dataset](img/elbow_method.png) |
 |:--:|
 | *The elbow method visualization. Attempted from n_clusters of 4 to 50.* |
 
@@ -143,36 +143,36 @@ that classifying all the levels will be fairly difficult, it helped us understan
 mistaken for one another by the model. For example, levels 2-2 and 7-2 are crazy similar. In fact, 
 the levels are the exact same layout but with more Bloopers (squid enemies), as seen below:
 
-| ![]() | ![]() | 
-|:--:| :--:| 
+| ![2-2 image slice](img/2-2_slice.png)&nbsp;&nbsp;&nbsp;![7-2 image slice](img/7-2_slice.png) | 
+|:--:| 
 | *Image slices from 2-2 and 7-2 respectively. The underwater levels are especially quite difficult to tell the difference between. Note the only change is the addition of the Blooper on the left side of the image.* |
 
 We can also take apart a single level and analyze what each cluster looks like. For simplicity let's take the cluster assignments
 of each snippet of 1-1 and show the proportions of each assigned cluster.
 
-| ![]() |
+| ![pie graph of clusters within 1-1](img/1-1_clusterification.png) |
 |:--:| 
 | *The cluster assignment for all the image slices of 1-1.* |
 
 Now if we take example slices for each, we can show what the general color of each cluster looks like.
 
-| ![]() | ![]() | 
+| ![blue sky-ish slice of 1-1](img/1-1_cluster_1.png) | ![block ramp from 1-1](img/1-1_cluster_10.png) | 
 |:--:| :--:| 
 | *Example from Cluster 1. Notice the large amount of blue from the sky, with lesser proportion of the reddish-brown of the ground* | *Example from Cluster 10. Now there is a considerable more proportion of the reddish-brown due to the block ramp, leading to a different cluster assignment.* |
 
 If we do this for all clusters, we can actually see the different 'colors spaces' in each level, and compare each level's pie graph
-immediately.
-(not shown because it takes a while and takes up a large amount of space)
+immediately
+(not shown though, because it takes a while and takes up a large amount of space)
  
 To further delve into this section, we then created a basic convolutional neural network for the first world using Pytorch, with two convolution layers and three 
 fully connected layers. The input is the aforementioned 208x240 image slice, and the output is a 4 dimensional probability vector, 
 with each dimension corresponding to the probability that the input is for one of the possible 4 levels in the 
-first world. Our optimizer was Adam, and the loss we used was cross entropy, mostly because that is these we were the ones we were most familiar with.
+first world. Our optimizer was Adam, and the loss we used was cross entropy, mostly because these we were the ones we were most familiar with.
 We split our data into 80% training and 20% testing. After training the model, we ended with a 95% accuracy on the 
 test set. With a batch size of 16 and only one epoch, we achieved these results. When we attempted to add more epochs,
 the model overfit due to the small amount of classes.
 
-| ![]() | 
+| ![Basic CNN network visualization pipeline](img/nn.png) | 
 |:--:| 
 | *The network visualized as a diagram. Relu and batch norm layers are omitted.* |
 
