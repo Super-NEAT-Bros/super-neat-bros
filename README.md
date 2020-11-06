@@ -108,6 +108,24 @@ design in the future.
 
 ### NEAT Algorithm
 
+| ![NEAT Algorithm](img/mario.jpg) |
+|:--:|
+| *An example of what the NEAT Algorithm looks like in action.* |
+
+At the moment, we have a working NEAT algorithm that is applied to the game Super Mario Bros. Our program runs using the BizHawk emulator, and was heavily inspired by [this great video](https://www.youtube.com/watch?v=qv6UVOQ0F44) by Seth Bling. The NEAT algorithm is a reinforcement learning model, so that means that our model learned by making entirely random moves. The model has rewards based on how far the agent got in the level and punishments based on both the lack of movement and encountering an enemy.
+
+| ![NEAT Algorithm](img/reinforcement.jpg) |
+|:--:|
+| *The green lines represent positive connections, while the red lines represent negative connections.* |
+
+Each attempt has an associated fitness score based on these factors, and a new attempt is made when the agent either dies or stays still for too long. Each of these attempts at completing the level is considered a different “species” in each generation. After enough attempts are recorded, a new generation is created with the species that had the maximum fitness recorded. 
+
+| ![NEAT Algorithm](img/gen-info.jpg) |
+|:--:|
+| *The data associated with each generation. The fitness number is the key piece of data for the algorithm.* |
+
+Variations of this species are implemented into this next generation and after enough generations, the agent will learn what button inputs are necessary to complete the level and at specific times. After training the model for over forty-eight hours and sixty generations, the agent was able to successfully complete the first level of Super Mario Bros.
+
 ### Level Classifier
 
 So far, we were able to crop, clean, and process the image data for each level of the game, 
