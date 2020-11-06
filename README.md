@@ -63,18 +63,20 @@ Commonly used in image and video recognition, we thought this would be a great c
 
 In specifics, a successful classification would look like inputting a screen sized image of a Super Mario Bros. level into the network,
 without the level indicator, and the output would be the correct classification of the level from which the image is from.
+There are 32 level classes, or 4 levels from 8 worlds.
 We are hoping that with CNNs' shift invariance, the model will be able to find key features of each level and recognize them
 wherever on the screen, as opposed to the fully connected's method of detection.
 
 We are using 208x240 pixel slices cut out ourselves from the full Super Mario Bros. level maps
-[this website](https://nesmaps.com/maps/SuperMarioBrothers/SuperMarioBrothers.html).
+from [this website](https://nesmaps.com/maps/SuperMarioBrothers/SuperMarioBrothers.html).
 The extended and reduced image size of these level images make for slightly faster computation and
 easier acquisition of the actual dataset.
 
 ## Desired Results
 
+### Playing the Game
 As a base goal, we want the computer to be able to complete a level of a mario game with a better time than the
-control (unedited script). This will reduce training time significantly to allow for extension. We can likely
+control (the unedited reference script). This will reduce training time significantly to allow for extension. We can likely
 accomplish this through multiple means, via increasing information put into the algorithm or
 rewarding certain beneficial changes more than others.
 
@@ -89,7 +91,18 @@ trained on a wide variety of levels, we want it to be able to play any other lev
 difficulty the first time through, just like a skilled human can. This is likely a problem of generalization,
 and requires a careful balance.
 
-For the analysis, we want to be able to apply our learned information to better program our NEAT algorithm.
+For the unsupervised analysis, we want to be able to apply our learned information to better program our NEAT algorithm.
+This is likely done through identifying which features cluster towards higher scores, and also what are features that all levels generate.
+
+### Memorizing the game
+
+The overall goal here is to be able to detect the level input using the CNN.
+An accuracy above 90%+ would be awesome, but we don't exactly know how achievable this is with all levels combined.
+Another thing to consider are the underground/secret portions of levels. Some of these are copy/pasted directly from one level
+to the next, so we wonder if we could still include them or do we have to purge them from the dataset.
+
+In the end, we also want to be able to determine which levels were the hardest for the model to distinguish, so that we may improve the
+design in the future.
 
 ## Current Development
 
@@ -97,17 +110,93 @@ For the analysis, we want to be able to apply our learned information to better 
 
 ### Level Classifier
 
+So far, we were able to crop, clean, and process the image data for each level of the game, 
+analyze the color quantities with KMeans clustering, and produce a supervised, accurate level identification model for the first world. 
+
+To avoid trivial level classification with the level indicator, we grabbed the full maps of each 
+level from [this online source](https://nesmaps.com/maps/SuperMarioBrothers/SuperMarioBrothers.html) 
+*without* the game HUD. This standardized our image height to 208 pixels, and then the maps were then 
+sliced with a 240-pixel-width “sliding window”, with a stride of 4. This size is around the size of the screen
+displayed via an emulator. The method produces around 800 images per most levels.
+Some level have higher or lower image counts due to level length, but this should not affect the data.
+
+| ![]() |
+|:--:|
+| *An example image slice from the first world.* |
+
+Now, for our images, we know some levels will likely be similar and we want to understand which of the levels the classifier would likely
+have a hard time distinguishing between. Since the NES only has a specific number of colors available, we decided to count up
+these colors for each individual image slice. To do this, we had to take each RGB value from the image, turn the value into byte form,
+and count up each unique value. This produced a 37 dimensional vector for each image.
+
+To determine which levels were similar in color to one another, we decided KMeans was the simplest way to do so.
+GMM/EM might conform better, but we want hard assignments in terms of color quantity. When we ran this entire dataset 
+through the KMeans Elbow Method via scikitlearn, we got the best results at 12 clusters.
+
+| ![]() |
+|:--:|
+| *The elbow method visualization. Attempted from n_clusters of 4 to 50.* |
+
+The results at 12 clusters showed the parts of levels were similar enough in color quantity to result
+in two or more different images from different levels to be labelled under the same cluster. Although this shows
+that classifying all the levels will be fairly difficult, it helped us understand which levels were likely to be
+mistaken for one another by the model. For example, levels 2-2 and 7-2 are crazy similar. In fact, 
+the levels are the exact same layout but with more Bloopers (squid enemies), as seen below:
+
+| ![]() | ![]() | 
+|:--:| :--:| 
+| *Image slices from 2-2 and 7-2 respectively. The underwater levels are especially quite difficult to tell the difference between. Note the only change is the addition of the Blooper on the left side of the image.* |
+
+We can also take apart a single level and analyze what each cluster looks like. For simplicity let's take the cluster assignments
+of each snippet of 1-1 and show the proportions of each assigned cluster.
+
+| ![]() |
+|:--:| 
+| *The cluster assignment for all the image slices of 1-1.* |
+
+Now if we take example slices for each, we can show what the general color of each cluster looks like.
+
+| ![]() | ![]() | 
+|:--:| :--:| 
+| *Example from Cluster 1. Notice the large amount of blue from the sky, with lesser proportion of the reddish-brown of the ground* | *Example from Cluster 10. Now there is a considerable more proportion of the reddish-brown due to the block ramp, leading to a different cluster assignment.* |
+
+If we do this for all clusters, we can actually see the different 'colors spaces' in each level, and compare each level's pie graph
+immediately.
+(not shown because it takes a while and takes up a large amount of space)
+ 
+To further delve into this section, we then created a basic convolutional neural network for the first world using Pytorch, with two convolution layers and three 
+fully connected layers. The input is the aforementioned 208x240 image slice, and the output is a 4 dimensional probability vector, 
+with each dimension corresponding to the probability that the input is for one of the possible 4 levels in the 
+first world. Our optimizer was Adam, and the loss we used was cross entropy, mostly because that is these we were the ones we were most familiar with.
+We split our data into 80% training and 20% testing. After training the model, we ended with a 95% accuracy on the 
+test set. With a batch size of 16 and only one epoch, we achieved these results. When we attempted to add more epochs,
+the model overfit due to the small amount of classes.
+
+| ![]() | 
+|:--:| 
+| *The network visualized as a diagram. Relu and batch norm layers are omitted.* |
+
+Pretty awesome, but we know that classifying all 32 levels will be much more difficult.
+
 ## Challenges
+
+### NEAT Algorithm
+
+### Level Classifier
 
 ## Discussion
 
 The best physical outcome for this project would be the generation of a model to play through each level of
 Super Mario Bros. without dying--maybe with at least a little training beforehand.
 
-We also hope at a high level this explore more into the generalization of models when using NEAT to play
+Furthermore, at a high level, we wish this will entice us to explore more into the generalization of models when using NEAT to play
 video games, and possibly explore into training a model to play more complex games like Kirby.
 
-We also hope to get a reasonable accuracy on the level detection across all levels.
+We also hope to get a reasonable accuracy on the level detection across all levels, and understand how the
+CNNS memorizes the level. This could be further understood through weight maps like GradCAM.
+
+Also, we could extend the model to include more than just Super Mario Bros. and possibly "Super Mario Bros.: The Lost Levels" or
+even "Super Mario Bros. 3".
 
 ## References
 
@@ -124,8 +213,8 @@ Kenneth O. Stanley and Risto Miikkulainen - 2002
 OpenAI: Christopher Berner and Greg Brockman and Brooke Chan and Vicki Cheung and Przemysław Dębiak and Christy Dennison and David Farhi and Quirin Fischer and Shariq Hashme and Chris Hesse and Rafal Józefowicz and Scott Gray and Catherine Olsson and Jakub Pachocki and Michael Petrov and Henrique Pondé de Oliveira Pinto and Jonathan Raiman and Tim Salimans and Jeremy Schlatter and Jonas Schneider and Szymon Sidor and Ilya Sutskever and Jie Tang and Filip Wolski and Susan Zhang - 2019
 
 [MarI/O - Machine Learning for Video Games](https://www.youtube.com/watch?v=qv6UVOQ0F44)
-[Link to reference code](https://pastebin.com/ZZmSNaHX)
-Sethbling, Youtube
+[Link to reference script](https://pastebin.com/ZZmSNaHX)
+Sethbling, [check out his awesome videos](https://www.youtube.com/channel/UC8aG3LDTDwNR1UQhSn9uVrw)
 
 [Parallel distributed processing model with local
 space-invariant interconnections and
