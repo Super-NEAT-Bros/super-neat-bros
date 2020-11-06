@@ -182,7 +182,17 @@ Pretty awesome, but we know that classifying all 32 levels will be much more dif
 
 ### NEAT Algorithm
 
+There are several challenges that may arise when attempting to apply a NEAT algorithm to some problem. For us it seems to be finding the right hyper-parameters and reward system to make the long training times worth our while. New obstacles always prove to be a problem taking the agent hours at a time to learn a way to conquer them. This "specilization" of a single obstacle can also be detrimental in its ability to beat obstacles that it has previously had no problems with just making matters worse. Moving forward, we plan on experimenting more with batch sizes and fine tuning our parameters and reward function to see if better training is possible. We also want to have multiple different paramed models training on each of our computers to help with the tuning of our params. All in all these are good first steps to better our understanding of the data we are working with and how to get it to work for us. We hope that with more time and training we can get the NEAT algorithm to play mario better than us.
+
 ### Level Classifier
+
+Since this game is rather old, the level design and color palette used throughout the levels is very similar. This makes classifying each level quite a challenge as pixel composition from level to level does not vary greatly. There are of course exceptions, but just from looking at the cluster assignemnts of 2-2 and 7-2 it is evident some levels have exceptional overlap.
+
+| ![cluster with 2-2 slices](img/2-2_clusterification.png) | ![cluster with 7-2 slices](img/7-2_clusterification.png) | 
+*Cluster assignemnts of levels 2-2 and 7-2. Notice how they were assigned to the same cluster making them nearly impossible to tell apart*
+
+
+Currently, we are getting good results for the first level but would like to see accurate classification throughout the entire game. In an effort to achieve this, we may have to change the way we collect data about each of the levels as well as experimenting with different clustering methods and varying the number of cluster centers.
 
 ## Discussion
 
