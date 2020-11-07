@@ -8,29 +8,29 @@ Aidan Albers, Jeremy Webb, Zachary Baskin, Zachary Minot
 
 ## Introduction/Background
 
-Games often have AI that play as Non-player Characters (NPCs). They could be enemies or allies and be as simple
+Games often have AI that play as Non-Player Characters (NPCs). They could be enemies or allies as simple
 as the aliens in Space Invaders or as complex as the demons and monsters that fight each other in DOOM. However,
-we looked at this and instead asked,
+we thought,
 
 "What if instead the AI *played* the game?"
 
-To choose the game, we recognized that we should probably try this first on an older game. Older games are much easier to both control
+To choose the game, we recognized that we should probably attempt an older game. Older games are much easier to both control
 (due to often having less complicated and controls overall) and extract into data for our model
 (due to often using tilesets).
 Super Mario Bros. is a classic game for the Nintendo Entertainment System that has very few controls:
-right, left, jump, and run. It also has world split into a tileset that allows us to easily view the game as a grid. As a bonus,
-the goal of Super Mario Bros. is as simple of an idea as getting to the flag at the right of the world. The game is also run on an emulator on a PC for
+right, left, jump, and run. It also has world split into a tileset that allows us to easily view the game as a grid. Additionally,
+the goal of Super Mario Bros. is as simple as getting to the flag at the right of the world. The game is run on an emulator on a PC for
 both functionality and feasability. We've seen this done on Super Mario Bros by Sethbling, a Youtube content creator, but the specific implementation
 he used was not very successful. We plan to adapt his algorithm and improve it to search for better results.
 
-Although this is totally cool, we thought we could explore more in similar ideas. Speedrunners, people who
+Although this is intriguing, we thought we could explore more in similar ideas. Speedrunners, people who
 play games in attempt to complete them the fastest, not only memorize inputs but entire layouts of levels.
 Often times they can recognize levels just based on a few key block placements or a certain enemy position.
-This then lead us to ask the question
+This then lead us to ask the question,
 
 "If the AI can play the game, can it then *memorize* it?"
 
-and the second problem of our project was born. Could a machine look at a the screen of Super Mario Bros. and
+Thus, the second problem of our project was born. Can a machine look at a the screen of Super Mario Bros. and
 detect which level that screen is on? One trick is that there is a level counter on the game, so we would need to remove it.
 At its whole, the artificial intelligence would be able to look at a slice of a level of mario, and without the
 level indicator, detect which level mario is currently in.
@@ -50,20 +50,20 @@ learning where to go and which enemies to avoid. This process can take some time
 to over a day of learning, until the player object successfully completes the level without dying and 
 potentially better than human players.
 
-We also plan on implementing a clustering analysis (likely GMM/EM) of the various models we create, to see which one's worked and which one's didn't and why.
+We also plan on implementing a clustering analysis (likely GMM/EM) of the various models we create, to see which ones worked and which ones didn't and why.
 
 ### Memorizing the game
 
-To extend this even further, we want the ability to detect which level Mario across the entire game, without level indicator. 
-We are using the power of classification via Convolutional Neural Networks (CNNs). CNNs are a regularized version of fully connected networks,
+To extend this even further, we want the ability to detect which level Mario is in across the entire game without the level indicator. 
+We are using classification via Convolutional Neural Networks (CNNs). CNNs are a regularized version of fully connected networks
 that use the power of convolutional kernels defined by a width and height passed through a filter to achieve regularization and translation invariance.
 The key aspect of CNNs for our project is the translation, or shift, invariance, meaning that certain definined features translated in some way
 around are treated as equal, rather than different. CNNs also have a less chance of overfitting the training data, which is an obvious plus.
-Commonly used in image and video recognition, we thought this would be a great class of network to use for our object.
+Commonly used in image and video recognition, we believed this would be a great class of network to use for our object.
 
-In specifics, a successful classification would look like inputting a screen sized image of a Super Mario Bros. level into the network,
-without the level indicator, and the output would be the correct classification of the level from which the image is from.
-There are 32 level classes, or 4 levels from 8 worlds.
+Specifically, a successful classification would look like inputting a screen sized image of a Super Mario Bros. level into the network,
+without the level indicator, and the output would be the correct classification of the level which the image is from.
+There are 32 level classes - 4 levels from 8 worlds.
 We are hoping that with CNNs' shift invariance, the model will be able to find key features of each level and recognize them
 wherever on the screen, as opposed to the fully connected's method of detection.
 
@@ -80,7 +80,7 @@ control (the unedited reference script). This will reduce training time signific
 accomplish this through multiple means, via increasing information put into the algorithm or
 rewarding certain beneficial changes more than others.
 
-Next, we want to introduce an incentive to complete a level will be doing so faster than a skilled human can. 
+Next, we want to introduce an incentive to complete a level faster than a skilled human can. 
 We intend to “reinforce” the computer to finish levels faster. We will be satisfied with the 
 algorithm when it is able to beat us in finishing the level even after we have practiced for a while.
 
@@ -92,16 +92,16 @@ difficulty the first time through, just like a skilled human can. This is likely
 and requires a careful balance.
 
 For the unsupervised analysis, we want to be able to apply our learned information to better program our NEAT algorithm.
-This is likely done through identifying which features cluster towards higher scores, and also what are features that all levels generate.
+This is likely done through identifying which features cluster towards higher scores and what features all levels generate.
 
 ### Memorizing the game
 
 The overall goal here is to be able to detect the level input using the CNN.
-An accuracy above 90%+ would be awesome, but we don't exactly know how achievable this is with all levels combined.
+An accuracy above 90% would be ideal, but we don't exactly know how achievable this is with all levels combined.
 Another thing to consider are the underground/secret portions of levels. Some of these are copy/pasted directly from one level
 to the next, so we wonder if we could still include them or do we have to purge them from the dataset.
 
-In the end, we also want to be able to determine which levels were the hardest for the model to distinguish, so that we may improve the
+In the end, we also want to be able to determine which levels were the hardest for the model to distinguish so that we may improve the
 design in the future.
 
 ## Current Development
@@ -124,7 +124,7 @@ Each attempt has an associated fitness score based on these factors, and a new a
 |:--:|
 | *The data associated with each generation. The fitness number is the key piece of data for the algorithm.* |
 
-Variations of this species are implemented into this next generation and after enough generations, the agent will learn what button inputs are necessary to complete the level and at specific times. After training the model for over forty-eight hours and sixty generations, the agent was able to successfully complete the first level of Super Mario Bros.
+Variations of this species are implemented into this next generation, and after enough generations, the agent will learn what button inputs are necessary to complete the level at specific times. After training the model for over forty-eight hours and sixty generations, the agent was able to successfully complete the first level of Super Mario Bros.
 
 ### Level Classifier
 
@@ -135,15 +135,15 @@ To avoid trivial level classification with the level indicator, we grabbed the f
 level from [this online source](https://nesmaps.com/maps/SuperMarioBrothers/SuperMarioBrothers.html) 
 *without* the game HUD. This standardized our image height to 208 pixels, and then the maps were then 
 sliced with a 240-pixel-width “sliding window”, with a stride of 4. This size is around the size of the screen
-displayed via an emulator. The method produces around 800 images per most levels.
+displayed via an emulator. The method produces around 800 images for most levels.
 Some level have higher or lower image counts due to level length, but this should not affect the data.
 
 | ![Example Image slice](img/example_slice.png) |
 |:--:|
 | *An example image slice from the first world.* |
 
-Now, for our images, we know some levels will likely be similar and we want to understand which of the levels the classifier would likely
-have a hard time distinguishing between. Since the NES only has a specific number of colors available, we decided to count up
+For our images, we know some levels will likely be similar and we want to understand which of the levels the classifier would likely
+have a hard time distinguishing. Since the NES only has a specific number of colors available, we decided to count up
 these colors for each individual image slice. To do this, we had to take each RGB value from the image, turn the value into byte form,
 and count up each unique value. This produced a 37 dimensional vector for each image.
 
@@ -158,7 +158,7 @@ through the KMeans Elbow Method via scikitlearn, we got the best results at 12 c
 The results at 12 clusters showed the parts of levels were similar enough in color quantity to result
 in two or more different images from different levels to be labelled under the same cluster. Although this shows
 that classifying all the levels will be fairly difficult, it helped us understand which levels were likely to be
-mistaken for one another by the model. For example, levels 2-2 and 7-2 are crazy similar. In fact, 
+mistaken for one another by the model. For example, levels 2-2 and 7-2 are almost identical. In fact, 
 the levels are the exact same layout but with more Bloopers (squid enemies), as seen below:
 
 | ![2-2 image slice](img/2-2_slice.png)&nbsp;&nbsp;&nbsp;![7-2 image slice](img/7-2_slice.png) | 
@@ -200,16 +200,15 @@ Pretty awesome, but we know that classifying all 32 levels will be much more dif
 
 ### NEAT Algorithm
 
-There are several challenges that may arise when attempting to apply a NEAT algorithm to some problem. For us it seems to be finding the right hyper-parameters and reward system to make the long training times worth our while. New obstacles always prove to be a problem taking the agent hours at a time to learn a way to conquer them. This "specilization" of a single obstacle can also be detrimental in its ability to beat obstacles that it has previously had no problems with just making matters worse. Moving forward, we plan on experimenting more with batch sizes and fine tuning our parameters and reward function to see if better training is possible. We also want to have multiple different paramed models training on each of our computers to help with the tuning of our params. All in all these are good first steps to better our understanding of the data we are working with and how to get it to work for us. We hope that with more time and training we can get the NEAT algorithm to play mario better than us.
+There are several challenges that may arise when attempting to apply a NEAT algorithm to some problem. For us, it seems to be finding the right hyper-parameters and reward system to make the long training times worth our while. New obstacles always prove to be a problem, taking the agent hours at a time to learn a way to conquer them. This "specilization" of a single obstacle can also be detrimental in its ability to beat obstacles that previously caused no problems, just making matters worse. Moving forward, we plan on experimenting more with batch sizes and fine tuning our parameters and reward function to see if better training is possible. We also want to have multiple different parametered models training on each of our computers to help with the tuning of our parameters. All in all, these are good first steps to better our understanding of the data we are working with and how to get it to work for us. We hope that with more time and training we can get the NEAT algorithm to play mario better than us.
 
 ### Level Classifier
 
-Since this game is rather old, the level design and color palette used throughout the levels is very similar. This makes classifying each level quite a challenge as pixel composition from level to level does not vary greatly. There are of course exceptions, but just from looking at the cluster assignemnts of 2-2 and 7-2 it is evident some levels have exceptional overlap.
+Since this game is rather old, the level design and color palette used throughout the levels is very similar. This makes classifying each level quite a challenge as pixel composition from level to level does not vary greatly. There are exceptions, but just from looking at the cluster assignemnts of 2-2 and 7-2 it is evident some levels have exceptional overlap.
 
 | ![cluster with 2-2 slices](img/2-2_clusterification.png)&nbsp;&nbsp;&nbsp;![cluster with 7-2 slices](img/7-2_clusterification.png) | 
 |:--:|
 |*Cluster assignemnts of levels 2-2 and 7-2. Notice how they were assigned to the same cluster making them nearly impossible to tell apart* |
-
 
 Currently, we are getting good results for the first level but would like to see accurate classification throughout the entire game. In an effort to achieve this, we may have to change the way we collect data about each of the levels as well as experimenting with different clustering methods and varying the number of cluster centers.
 
@@ -218,11 +217,11 @@ Currently, we are getting good results for the first level but would like to see
 The best physical outcome for this project would be the generation of a model to play through each level of
 Super Mario Bros. without dying--maybe with at least a little training beforehand.
 
-Furthermore, at a high level, we wish this will entice us to explore more into the generalization of models when using NEAT to play
+Furthermore, at a high level, we hope this will entice us to explore more into the generalization of models when using NEAT to play
 video games, and possibly explore into training a model to play more complex games like Kirby.
 
 We also hope to get a reasonable accuracy on the level detection across all levels, and understand how the
-CNNS memorizes the level. This could be further understood through weight maps like GradCAM.
+CNN memorizes the level. This could be further understood through weight maps like GradCAM.
 
 Also, we could extend the model to include more than just Super Mario Bros. and possibly "Super Mario Bros.: The Lost Levels" or
 even "Super Mario Bros. 3".
