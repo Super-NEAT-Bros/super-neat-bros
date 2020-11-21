@@ -55,7 +55,7 @@ def get_image_arrays(image_list):
 def create_level_slices():
     image_set_array = np.array([])
     target_set_array = np.array([])
-    stride = 18
+    stride = 5
     for i, image in enumerate(get_image_arrays(get_level_image_list())):
         windowed_image = image[:, (np.arange((image.shape[1] - 240) // stride) * stride)[:, np.newaxis] + np.arange(240)].transpose(1, 0, 2, 3)
         image_set_array = np.vstack((image_set_array, windowed_image)) if image_set_array.size else windowed_image
