@@ -104,7 +104,7 @@ level_dataset = TransformTensorDataset((image_tensor, target_tensor), transform=
 # In[8]:
 
 
-batch_size = 256
+batch_size = 128
 val_split = .1
 test_split = .1
 shuffle_dataset = True
@@ -187,7 +187,7 @@ class LevelClassifier(nn.Module):
 
 
 model = LevelClassifier().to(device)
-optimizer = optim.Adam(model.parameters(), lr=0.0005)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.CrossEntropyLoss()
 
 
@@ -197,7 +197,7 @@ criterion = nn.CrossEntropyLoss()
 PRINT_FREQ = 2
 
 
-for epoch in range(15): 
+for epoch in range(15):
     model.train()
     
     total_running_loss = 0.0
