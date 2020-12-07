@@ -236,7 +236,7 @@ accuracy. We ran this again and then tested against the test set, and got a fina
 Our F1-score is not listed as the class distribution is fairly equal and difficult to
 analyze with a multi-class set up.
 
-| ![blue sky-ish slice of 1-1](img/avgloss.png) | ![block ramp from 1-1](img/vtacc.png) | 
+| ![Average loss graph of selected model](img/avgloss.png) | ![Validation accuracy graph of selected model](img/vtacc.png) | 
 |:--:| :--:| 
 | *The average loss of the selected model of the epochs ran.* | *The validation accuracy for each epoch ran along with the final test accuracy tangent.* |
 
