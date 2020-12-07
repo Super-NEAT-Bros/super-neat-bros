@@ -126,6 +126,8 @@ Each attempt has an associated fitness score based on these factors, and a new a
 
 Variations of this species are implemented into this next generation, and after enough generations, the agent will learn what button inputs are necessary to complete the level at specific times. After training the model for over forty-eight hours and sixty generations, the agent was able to successfully complete the first level of Super Mario Bros.
 
+After the initial test of the NEAT Algorithm, we wanted to try to tune hyperparameters to train the agent as efficiently as possible.  After tuning and experimenting, we were able to reduce the original training time by about 20%. The majority of this progress was made by changing how the agent saw gaps in the ground. If Mario was approaching a large jump, we made more explicit instructions for the agent to get through the obstacle rather than wait for the algorithm to stumble across the solution of jumping.
+
 ### Level Classifier
 
 To avoid trivial level classification with the level indicator, we grabbed the full maps of each 
@@ -253,14 +255,12 @@ conquer them. This "specialization" of a single obstacle can also be
 detrimental in its ability to beat obstacles that previously caused no problems, 
 just making matters worse. 
 
-Moving forward, we plan on experimenting more with batch sizes and 
-fine tuning our parameters and reward function to see if better training is possible. 
-We also want to have multiple different parametered models training 
-on each of our computers to help with the tuning of our parameters. 
-All in all, these are good first steps to better our understanding of 
-the data we are working with and how to get it to work for us. 
-We hope that with more time and training we can get the NEAT algorithm 
-to play mario better than us.
+The biggest problem we have encountered with the NEAT algorithm is gathering sufficient
+data to assess the effectiveness of how we tune the hyper-parameters for the model. Since
+each model takes about a day and a half of continuous training to run, we cannot gather enough
+statistical data to judge how the model responds to our tuning of hyperparameters. With
+more computing power, we believe that we would more accurately be able to improve the training
+time of the NEAT algorithm through hyper-parameter tuning.
 
 ### Level Classifier
 
@@ -290,6 +290,9 @@ training with more varied data.
 
 ### NEAT Algorithm 
 
+In reflection, we are satisfied with the results of the NEAT algorithm to play Super Mario Bros. Our main
+goal was for the project was to complete a level of Super Mario Bros. We not only did this, but we our algorithm
+is able to play 
 The best physical outcome for this project would be the generation of a model to play through each level of
 Super Mario Bros. without dying--maybe with at least a little training beforehand.
 
@@ -306,7 +309,7 @@ expect our accuracy to drop based on the design and information space of our mod
 Although we were limited by our resources, we made do, and hopefully
 we can pick this project up in the future with more resources.
 
-More analyzation could be done with each specific level, detemrining which levels
+More analyzation could be done with each specific level, determining which levels
 were actually misclassified and then iterating on those results could prove promising.
 Another thing to consider is gradient visualization. This would let us actually get a 
 glance at the individual detection methods for each slice of a level.
