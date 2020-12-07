@@ -1,4 +1,4 @@
-# Super NEAT Bros. Midterm Report
+# Super NEAT Bros. Final Report
 
 Aidan Albers, Jeremy Webb, Zachary Baskin, Zachary Minot
 
