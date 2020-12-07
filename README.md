@@ -72,7 +72,7 @@ from [this website](https://nesmaps.com/maps/SuperMarioBrothers/SuperMarioBrothe
 The extended and reduced image size of these level images make for slightly faster computation and
 easier acquisition of the actual dataset.
 
-## Desired Results
+## Desired Outcome
 
 ### Playing the Game
 As a base goal, we want the computer to be able to complete a level of a mario game with a better time than the
@@ -104,7 +104,7 @@ to the next, so we wonder if we could still include them or do we have to purge 
 In the end, we also want to be able to determine which levels were the hardest for the model to distinguish so that we may improve the
 design in the future.
 
-## Current Development
+## Development and Results
 
 ### NEAT Algorithm
 
@@ -127,9 +127,6 @@ Each attempt has an associated fitness score based on these factors, and a new a
 Variations of this species are implemented into this next generation, and after enough generations, the agent will learn what button inputs are necessary to complete the level at specific times. After training the model for over forty-eight hours and sixty generations, the agent was able to successfully complete the first level of Super Mario Bros.
 
 ### Level Classifier
-
-So far, we were able to crop, clean, and process the image data for each level of the game, 
-analyze the color quantities with KMeans clustering, and produce a supervised, accurate level identification model for the first world. 
 
 To avoid trivial level classification with the level indicator, we grabbed the full maps of each 
 level from [this online source](https://nesmaps.com/maps/SuperMarioBrothers/SuperMarioBrothers.html) 
@@ -188,13 +185,60 @@ with each dimension corresponding to the probability that the input is for one o
 first world. Our optimizer was Adam, and the loss we used was cross entropy, mostly because these we were the ones we were most familiar with.
 We split our data into 80% training and 20% testing. After training the model, we ended with a 95% accuracy on the 
 test set. With a batch size of 16 and only one epoch, we achieved these results. When we attempted to add more epochs,
-the model overfit due to the small amount of classes.
+the model overfit due to the small number of classes.
 
 | ![Basic CNN network visualization pipeline](img/nn.png) | 
 |:--:| 
-| *The network visualized as a diagram. Relu and batch norm layers are omitted.* |
+| *The basic network visualized as a diagram. Relu and batch norm layers are omitted.* |
 
-Pretty awesome, but we know that classifying all 32 levels will be much more difficult.
+Pretty awesome, but we knew that classifying 
+all 32 levels will be much more difficult. When attempting to 
+generate the data for all 32 levels, we actually ran into a memory issue 
+where the original dataset could not be loaded with our machines. 
+Unfortunately, we had to cut our dataset into half
+of what we had. 
+
+This dataset increase also brought us to design our model to be much more
+complex. We had to now classify over 4000 240x240 images
+into 32 different bins. To do so, we increased both the number of convolutional
+and fully connected layers to 4 and heavily increased the channels on the convolutional
+layers. These decisions allow for more room to process the image information.
+
+
+| ![Final CNN network visualization pipeline](img/nn2.png) | 
+|:--:| 
+| *The final network visualized as a diagram. Relu and batch norm layers are omitted.* |
+
+With the increased dataset sized, we also decided to split the dataset further with a 
+80-10-10 of training-validation-test. We kepy the same optimizer (Adam) and loss
+(cross entropy). After trying with multiple parameters we promising
+results against the validation set.
+
+| Epochs | Batch Size | Learning Rate | Validation Accuracy |
+|:-:|:-:|:-:|:-:|
+| 10 | 128 | 0.001 | 73.8 |
+| 10 | 256 | 0.0005 | 90.14 |
+| 10 | 256 | 0.001 | 88.5 |
+| 12 | 128 | 0.0005 | 91.02 |
+| 12 | 256 | 0.001 | 92.5 |
+| 15 | 128 | 0.0005 | 92.74 |
+| 15 | 128 | 0.001 | 91.31 |
+| 15 | 256 | 0.0005 | 91.81 |
+| 18 | 128 | 0.0005 | 91.7 |
+| 20 | 128 | 0.001 | 92.74 |
+| 20 | 256 | 0.0005 | 88.99 |
+| 20 | 256 | 0.001 | 90.97 |
+
+
+We decided to select the hyperparameters of 15 epochs, batch size of 128, and
+learning rate of 0.0005 due to the less stress on runtime and tie for highest validation
+accuracy. We ran this again and then tested against the test set, and got a final accuracy of 92%. This is much better than the guess percentage of 3% (1/32).
+Our F1-score is not listed as the class distribution is fairly equal and difficult to
+analyze with a multi-class set up.
+
+| ![blue sky-ish slice of 1-1](img/avgloss.png) | ![block ramp from 1-1](img/vtacc.png) | 
+|:--:| :--:| 
+| *The average loss of the selected model of the epochs ran.* | *The validation accuracy for each epoch ran along with the final test accuracy tangent.* |
 
 ## Challenges
 
@@ -212,7 +256,7 @@ Since this game is rather old, the level design and color palette used throughou
 
 Currently, we are getting good results for the first level but would like to see accurate classification throughout the entire game. In an effort to achieve this, we may have to change the way we collect data about each of the levels as well as experimenting with different clustering methods and varying the number of cluster centers.
 
-## Discussion
+## Discussion and Future Work
 
 The best physical outcome for this project would be the generation of a model to play through each level of
 Super Mario Bros. without dying--maybe with at least a little training beforehand.
