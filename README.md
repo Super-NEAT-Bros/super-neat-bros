@@ -104,7 +104,7 @@ to the next, so we wonder if we could still include them or do we have to purge 
 In the end, we also want to be able to determine which levels were the hardest for the model to distinguish so that we may improve the
 design in the future.
 
-## Current Development
+## Midterm Development
 
 ### NEAT Algorithm
 
@@ -225,6 +225,14 @@ CNN memorizes the level. This could be further understood through weight maps li
 
 Also, we could extend the model to include more than just Super Mario Bros. and possibly "Super Mario Bros.: The Lost Levels" or
 even "Super Mario Bros. 3".
+
+## Final Development
+
+### NEAT Algorithm
+
+### Level Classifier
+
+## Final Discussion
 
 ## References
 
