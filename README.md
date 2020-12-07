@@ -244,19 +244,51 @@ analyze with a multi-class set up.
 
 ### NEAT Algorithm
 
-There are several challenges that may arise when attempting to apply a NEAT algorithm to some problem. For us, it seems to be finding the right hyper-parameters and reward system to make the long training times worth our while. New obstacles always prove to be a problem, taking the agent hours at a time to learn a way to conquer them. This "specilization" of a single obstacle can also be detrimental in its ability to beat obstacles that previously caused no problems, just making matters worse. Moving forward, we plan on experimenting more with batch sizes and fine tuning our parameters and reward function to see if better training is possible. We also want to have multiple different parametered models training on each of our computers to help with the tuning of our parameters. All in all, these are good first steps to better our understanding of the data we are working with and how to get it to work for us. We hope that with more time and training we can get the NEAT algorithm to play mario better than us.
+There are several challenges that may arise when attempting 
+to apply a NEAT algorithm to some problem. For us, it seems to 
+be finding the right hyper-parameters and reward system to make the 
+long training times worth our while. New obstacles always prove to 
+be a problem, taking the agent hours at a time to learn a way to 
+conquer them. This "specialization" of a single obstacle can also be 
+detrimental in its ability to beat obstacles that previously caused no problems, 
+just making matters worse. 
+
+Moving forward, we plan on experimenting more with batch sizes and 
+fine tuning our parameters and reward function to see if better training is possible. 
+We also want to have multiple different parametered models training 
+on each of our computers to help with the tuning of our parameters. 
+All in all, these are good first steps to better our understanding of 
+the data we are working with and how to get it to work for us. 
+We hope that with more time and training we can get the NEAT algorithm 
+to play mario better than us.
 
 ### Level Classifier
 
-Since this game is rather old, the level design and color palette used throughout the levels is very similar. This makes classifying each level quite a challenge as pixel composition from level to level does not vary greatly. There are exceptions, but just from looking at the cluster assignemnts of 2-2 and 7-2 it is evident some levels have exceptional overlap.
+Since this game is rather old, the level design and color palette used 
+throughout the levels is very similar. This makes classifying each level 
+quite a challenge as pixel composition from level to level does not vary 
+greatly. There are exceptions, but just from looking at the cluster assignments 
+of 2-2 and 7-2 it is evident some levels have exceptional overlap.
 
 | ![cluster with 2-2 slices](img/2-2_clusterification.png)&nbsp;&nbsp;&nbsp;![cluster with 7-2 slices](img/7-2_clusterification.png) | 
 |:--:|
 |*Cluster assignemnts of levels 2-2 and 7-2. Notice how they were assigned to the same cluster making them nearly impossible to tell apart* |
 
-Currently, we are getting good results for the first level but would like to see accurate classification throughout the entire game. In an effort to achieve this, we may have to change the way we collect data about each of the levels as well as experimenting with different clustering methods and varying the number of cluster centers.
+Another large issue with the level classifier is our personal lack of computing
+resources. Both our dataset and our model design our limited to what we are able to run
+on our own personal computers, so we had to limit the mentioned two aspects. With more
+resources, we would likely be able to improve our performance metrics and 
+try new ideas.
+
+The dataset for the image classifier is also very clean compared to a regular
+image taken on a monitor. For best realistic results, onoe would have to use a screenshot
+of an emulator running Super Mario Bros. and adjust the image size accordingly. 
+With photos of a TV screen, this might prove difficult to get accurate results without
+training with more varied data.
 
 ## Discussion and Future Work
+
+### NEAT Algorithm 
 
 The best physical outcome for this project would be the generation of a model to play through each level of
 Super Mario Bros. without dying--maybe with at least a little training beforehand.
@@ -264,11 +296,22 @@ Super Mario Bros. without dying--maybe with at least a little training beforehan
 Furthermore, at a high level, we hope this will entice us to explore more into the generalization of models when using NEAT to play
 video games, and possibly explore into training a model to play more complex games like Kirby.
 
-We also hope to get a reasonable accuracy on the level detection across all levels, and understand how the
-CNN memorizes the level. This could be further understood through weight maps like GradCAM.
+### Level Classifier
 
-Also, we could extend the model to include more than just Super Mario Bros. and possibly "Super Mario Bros.: The Lost Levels" or
-even "Super Mario Bros. 3".
+Personally, we call the level classifier a successful project. Reaching a 
+92% accuracy detection on all the levels in the original Super Mario Bros. is
+a cool feat. The analyzation with Kmeans also proved to be a 
+valuable insight in determining which levels are similar, and how to 
+expect our accuracy to drop based on the design and information space of our model.
+Although we were limited by our resources, we made do, and hopefully
+we can pick this project up in the future with more resources.
+
+More analyzation could be done with each specific level, detemrining which levels
+were actually misclassified and then iterating on those results could prove promising.
+Another thing to consider is gradient visualization. This would let us actually get a 
+glance at the individual detection methods for each slice of a level.
+
+Furthermore, we could extend the model to include more than just Super Mario Bros. and possibly "Super Mario Bros.: The Lost Levels" or even "Super Mario Bros. 3".
 
 ## References
 
