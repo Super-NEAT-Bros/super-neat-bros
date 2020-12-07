@@ -199,7 +199,7 @@ Unfortunately, we had to cut our dataset into half
 of what we had. 
 
 This dataset increase also brought us to design our model to be much more
-complex. We had to now classify over 4000 240x240 images
+complex. We had to now classify over 4000 208x240 images
 into 32 different bins. To do so, we increased both the number of convolutional
 and fully connected layers to 4 and heavily increased the channels on the convolutional
 layers. These decisions allow for more room to process the image information.
