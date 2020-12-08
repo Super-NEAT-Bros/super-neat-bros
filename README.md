@@ -290,10 +290,13 @@ training with more varied data.
 
 ### NEAT Algorithm 
 
-In reflection, we are satisfied with the results of the NEAT algorithm to play Super Mario Bros. Our main
-goal was for the project was to complete a level of Super Mario Bros. We not only did this, but we our algorithm
-is able to play all 32 levels of Super Mario Bros.  Tuning the algorithm made our training times better and
-adding consideration for obstacles such as jumping made training easier and more robust.
+The majority of the work left to be done resides in the neat algorithm. A lot of improvements can be made if 
+we expand our knowledge of the LUA scripting language. We felt a bit handicapped trying to produce high level concepts 
+with our code while only knowing the bare-minimum. Specifically we would look into optimization techniques in an attempt 
+to mitigate the abysmal training times. Another thing that may arise is additional changes to the agent and its perception of the world. 
+Since each level is unique, we may have to add in more necessary changes like the gap detection to make our agent 
+perform well on certain unencountered obstacles. Overall, we believe great progress was made and this is a wonderful starting point 
+for future Machine Learning endeavors.
 
 Furthermore, at a high level, we hope this will entice us to explore more into the generalization of models when using NEAT to play
 video games, and possibly explore into training a model to play more complex games like Kirby.
