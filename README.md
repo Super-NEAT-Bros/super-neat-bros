@@ -292,9 +292,8 @@ training with more varied data.
 
 In reflection, we are satisfied with the results of the NEAT algorithm to play Super Mario Bros. Our main
 goal was for the project was to complete a level of Super Mario Bros. We not only did this, but we our algorithm
-is able to play 
-The best physical outcome for this project would be the generation of a model to play through each level of
-Super Mario Bros. without dying--maybe with at least a little training beforehand.
+is able to play all 32 levels of Super Mario Bros.  Tuning the algorithm made our training times better and
+adding consideration for obstacles such as jumping made training easier and more robust.
 
 Furthermore, at a high level, we hope this will entice us to explore more into the generalization of models when using NEAT to play
 video games, and possibly explore into training a model to play more complex games like Kirby.
